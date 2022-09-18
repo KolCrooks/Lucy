@@ -1,4 +1,4 @@
 discord-py-interactions
 quart
 twilio
-dotenv
+python-dotenv
