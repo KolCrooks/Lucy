@@ -7,10 +7,10 @@ from interactions import Embed, ActionRow, Button, ButtonStyle
 from quart import Quart
 from twilio.twiml.voice_response import VoiceResponse
 
-# import dotenv
+import dotenv
 import os
 
-# dotenv.load_dotenv()
+dotenv.load_dotenv()
 
 bot = interactions.Client(token=os.getenv('TOKEN'))
 
