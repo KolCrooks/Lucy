@@ -1,9 +1,12 @@
-from asyncio import sleep
+from asyncio import run, sleep
 from urllib import response
 import interactions
 from interactions import Embed, ActionRow, Button, ButtonStyle
+import dotenv
+import os
+dotenv.load_dotenv()
 
-bot = interactions.Client(token="your_secret_bot_token")
+bot = interactions.Client(token=os.getenv('TOKEN'))
 
 response = None
 
@@ -37,14 +40,16 @@ async def forward_response(ctx: interactions.ComponentContext):
 
 async def create_handle():
     for c in bot.guilds[0].channels:
+        print(c.name)
         if c.name == "buzz-in":
-            msg = await c.send(embeds=[Embed(title="Someone is at the door!")], components=[
-                ActionRow(components=[
-                    Button(style=ButtonStyle.PRIMARY, label="Open Door", custom_id="open"),
+            msg = await c.send(embeds=[Embed(title="Someone is at the door!")],
+             components= ActionRow(components=[
+                    Button(style=ButtonStyle.SUCCESS, label="Open Door", custom_id="open"),
                     Button(style=ButtonStyle.DANGER, label="Deny", custom_id="deny"),
-                    Button(style=ButtonStyle.SECONDARY, label="Forward To Your Phone", custom_id="forward"),
-                    ]),
-                ])
-
+                    Button(style=ButtonStyle.PRIMARY, label="Forward To Your Phone", custom_id="forward"),
+                ]),
+            )
+@bot.event
+async def on_ready():
+    await create_handle()
 bot.start()
-create_handle()
